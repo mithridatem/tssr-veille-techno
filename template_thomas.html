@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Technologique - Outils GitHub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-card: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+            --border-radius: 16px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container-custom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 0.25rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Grid Layout */
+        .grid-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Tool Cards */
+        .tool-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .tool-description {
+            color: #718096;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-primary);
+            color: white !important;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .tool-link:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tag {
+            padding: 0.35rem 0.75rem;
+            background: #edf2f7;
+            color: #667eea;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: white;
+            color: #2d3748;
+            border-color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .grid-tools {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                gap: 1rem;
+            }
+            
+            .stat-box {
+                padding: 0.75rem 1.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-custom">
+        <!-- Header -->
+        <div class="header-section">
+            <h1 class="main-title">🚀 Veille Technologique GitHub</h1>
+            <p class="subtitle">Découvrez les outils essentiels pour optimiser votre workflow de développement</p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Outils</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Open Source</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2025</div>
+                    <div class="stat-label">À jour</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Rechercher un outil...">
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="automation">Automatisation</button>
+            <button class="filter-btn" data-filter="security">Sécurité</button>
+            <button class="filter-btn" data-filter="dev">Développement</button>
+            <button class="filter-btn" data-filter="pentest">Pentest</button>
+            <button class="filter-btn" data-filter="osint">OSINT</button>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="grid-tools" id="toolsGrid">
+            
+            <article class="tool-card loading" data-category="automation" style="animation-delay: 0.1s">
+                <div class="card-icon">⚡</div>
+                <h3 class="tool-title">GitHub Actions</h3>
+                <p class="tool-description">
+                    Plateforme d'automatisation CI/CD intégrée à GitHub. Permet d'automatiser les workflows de développement : tests automatiques, déploiements, vérifications de code, etc.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">CI/CD</span>
+                    <a href="https://github.com/features/actions" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="dev" style="animation-delay: 0.2s">
+                <div class="card-icon">🤖</div>
+                <h3 class="tool-title">GitHub Copilot</h3>
+                <p class="tool-description">
+                    Assistant de programmation alimenté par l'IA qui suggère du code en temps réel. Basé sur OpenAI, il comprend le contexte et propose des solutions intelligentes.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">IA</span>
+                    <a href="https://github.com/features/copilot" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="automation" style="animation-delay: 0.3s">
+                <div class="card-icon">📋</div>
+                <h3 class="tool-title">GitHub Projects</h3>
+                <p class="tool-description">
+                    Outil de gestion de projet intégré permettant de créer des tableaux Kanban, roadmaps et suivre l'avancement des tâches en temps réel.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Gestion</span>
+                    <a href="https://github.com/features/issues" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="dev" style="animation-delay: 0.4s">
+                <div class="card-icon">☁️</div>
+                <h3 class="tool-title">GitHub Codespaces</h3>
+                <p class="tool-description">
+                    Environnement de développement cloud instantané. Codez directement dans le navigateur avec VS Code, accessible depuis n'importe où.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Cloud</span>
+                    <a href="https://github.com/features/codespaces" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 0.5s">
+                <div class="card-icon">🛡️</div>
+                <h3 class="tool-title">Dependabot</h3>
+                <p class="tool-description">
+                    Outil automatique de gestion des dépendances. Scanne les vulnérabilités de sécurité et crée des pull requests pour mettre à jour les packages.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Sécurité</span>
+                    <a href="https://github.com/dependabot" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="dev" style="animation-delay: 0.6s">
+                <div class="card-icon">💻</div>
+                <h3 class="tool-title">GitHub CLI</h3>
+                <p class="tool-description">
+                    Interface en ligne de commande officielle pour GitHub. Gérez repositories, issues et pull requests directement depuis votre terminal.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">CLI</span>
+                    <a href="https://cli.github.com/" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="dev" style="animation-delay: 0.7s">
+                <div class="card-icon">🌐</div>
+                <h3 class="tool-title">GitHub Pages</h3>
+                <p class="tool-description">
+                    Service d'hébergement de sites web statiques gratuit. Idéal pour documenter des projets, créer des portfolios ou héberger des sites Jekyll.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Hébergement</span>
+                    <a href="https://pages.github.com/" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="automation" style="animation-delay: 0.8s">
+                <div class="card-icon">📦</div>
+                <h3 class="tool-title">GitHub Packages</h3>
+                <p class="tool-description">
+                    Registre de packages pour héberger et gérer vos packages (npm, Docker, Maven, NuGet). Intégration native avec GitHub Actions.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Packages</span>
+                    <a href="https://github.com/features/packages" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 0.9s">
+                <div class="card-icon">🔒</div>
+                <h3 class="tool-title">GitHub Security</h3>
+                <p class="tool-description">
+                    Suite d'outils de sécurité incluant code scanning, secret scanning et security advisories pour une protection avancée de votre code.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Sécurité</span>
+                    <a href="https://github.com/features/security" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="automation" style="animation-delay: 1s">
+                <div class="card-icon">💬</div>
+                <h3 class="tool-title">GitHub Discussions</h3>
+                <p class="tool-description">
+                    Forum de discussion intégré aux repositories. Espace collaboratif pour Q&A, annonces et idées communautaires.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Communauté</span>
+                    <a href="https://docs.github.com/en/discussions" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <!-- NOUVEAUX OUTILS CYBERSÉCURITÉ -->
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 1.1s">
+                <div class="card-icon">🔍</div>
+                <h3 class="tool-title">Trivy</h3>
+                <p class="tool-description">
+                    Scanner de vulnérabilités complet pour conteneurs, Kubernetes, code et clouds. Détecte les failles, secrets et misconfigurations avec support SBOM.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Scanner</span>
+                    <a href="https://github.com/aquasecurity/trivy" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 1.2s">
+                <div class="card-icon">🔑</div>
+                <h3 class="tool-title">Gitleaks</h3>
+                <p class="tool-description">
+                    Outil de détection de secrets et credentials dans le code source. Scanne les repositories Git pour trouver les clés API, mots de passe exposés.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">DLP</span>
+                    <a href="https://github.com/gitleaks/gitleaks" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 1.3s">
+                <div class="card-icon">🌊</div>
+                <h3 class="tool-title">Wazuh</h3>
+                <p class="tool-description">
+                    Plateforme XDR/SIEM open-source unifiée pour la protection des endpoints et workloads cloud. Détection de malware, analyse de logs, réponse aux incidents.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">XDR/SIEM</span>
+                    <a href="https://github.com/wazuh/wazuh" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 1.4s">
+                <div class="card-icon">🦅</div>
+                <h3 class="tool-title">Prowler</h3>
+                <p class="tool-description">
+                    Audit de sécurité cloud pour AWS, Azure, GCP et Kubernetes. Évaluations de conformité (CIS, NIST, GDPR, HIPAA) et hardening des infrastructures.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Cloud Security</span>
+                    <a href="https://github.com/prowler-cloud/prowler" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="pentest" style="animation-delay: 1.5s">
+                <div class="card-icon">🎯</div>
+                <h3 class="tool-title">Metasploit Framework</h3>
+                <p class="tool-description">
+                    Framework de test de pénétration le plus utilisé au monde. Collection d'exploits, payloads et outils pour tests de sécurité offensifs.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Pentest</span>
+                    <a href="https://github.com/rapid7/metasploit-framework" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="osint" style="animation-delay: 1.6s">
+                <div class="card-icon">🕵️</div>
+                <h3 class="tool-title">Sherlock</h3>
+                <p class="tool-description">
+                    Outil OSINT pour traquer des noms d'utilisateur sur plus de 300 réseaux sociaux. Recherche rapide et efficace pour l'investigation numérique.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">OSINT</span>
+                    <a href="https://github.com/sherlock-project/sherlock" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="osint" style="animation-delay: 1.7s">
+                <div class="card-icon">🕷️</div>
+                <h3 class="tool-title">SpiderFoot</h3>
+                <p class="tool-description">
+                    Outil d'automatisation OSINT pour la threat intelligence. Collecte et analyse automatique d'informations sur votre surface d'attaque.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">OSINT</span>
+                    <a href="https://github.com/smicallef/spiderfoot" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 1.8s">
+                <div class="card-icon">🔐</div>
+                <h3 class="tool-title">Fail2Ban</h3>
+                <p class="tool-description">
+                    Système de prévention des intrusions (IPS). Bannit automatiquement les IP après détection d'activités suspectes dans les logs système.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">IPS</span>
+                    <a href="https://github.com/fail2ban/fail2ban" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="pentest" style="animation-delay: 1.9s">
+                <div class="card-icon">⚔️</div>
+                <h3 class="tool-title">Nikto</h3>
+                <p class="tool-description">
+                    Scanner de vulnérabilités web open-source. Teste plus de 6700 fichiers/programmes dangereux et vérifie les versions de serveurs obsolètes.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Web Scanner</span>
+                    <a href="https://github.com/sullo/nikto" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+            <article class="tool-card loading" data-category="security" style="animation-delay: 2s">
+                <div class="card-icon">🧰</div>
+                <h3 class="tool-title">Cyberonix</h3>
+                <p class="tool-description">
+                    Hub de ressources cybersécurité tout-en-un. Collection de cheatsheets, outils, frameworks et news pour hackers et chercheurs en sécurité.
+                </p>
+                <div class="card-footer">
+                    <span class="tag">Resources</span>
+                    <a href="https://github.com/Cyberonix-Developers/Cyberonix" target="_blank" class="tool-link">
+                        Découvrir →
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const toolCards = document.querySelectorAll('.tool-card');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            toolCards.forEach(card => {
+                const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                toolCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Enhanced hover effects
+        toolCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+        });
+    </script>
+</body>
+</html>
