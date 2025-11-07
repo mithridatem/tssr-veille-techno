@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Technologique - Outils pour Stagiaires</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        .tool-card {
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        .tool-card:hover {
+            transform: translateY(-2px);
+        }
+        .card-header {
+            border-bottom: 1px solid var(--pico-border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tool-title {
+            color: var(--pico-primary);
+            margin-bottom: 0.25rem;
+        }
+        .tool-description {
+            color: var(--pico-muted-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .tool-link {
+            display: inline-block;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background-color: var(--pico-primary);
+            color: white;
+            border-radius: var(--pico-border-radius);
+            transition: background-color 0.2s;
+        }
+        .tool-link:hover {
+            background-color: var(--pico-primary-hover);
+            color: white;
+        }
+        .container-custom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .main-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--pico-color);
+        }
+        .grid-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-custom">
+        <h1 class="main-title">🔧 Veille Technologique - CYBER TSSR</h1>
+        
+        <div class="grid-tools">
+            
+            <!-- Template de card - Exemple 1 -->
+            <article class="tool-card">
+                <div class="card-header">
+                    <h3 class="tool-title">Kali NetHunter</h3>
+                </div>
+                <p class="tool-description">
+                    C'est un OS Android servant à effectuer des test d'intrusion
+                </p>
+                <footer>
+                    <a href="https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-project.git" target="_blank" class="tool-link" style="color: black;">
+                        📂 Voir le repository
+                    </a>
+                </footer>
+            </article>
+
+            <!-- Template de card - Exemple 1 -->
+            <article class="tool-card">
+                <div class="card-header">
+                    <h3 class="tool-title">Reccueil de script PowerShell</h3>
+                </div>
+                <p class="tool-description">
+                    Il s'agit d'un regroupement de script permettant d'intéragir efficacement sur un environement Windows, check l'état de santé du système, de l'AD etc... il permet aussi d'installer plusieurs outils utile dans cet environement.
+                </p>
+                <footer>
+                    <a href="https://github.com/HiteaFR/PowerShell-Scripts.git" target="_blank" class="tool-link" style="color: black;">
+                        📂 Voir le repository
+                    </a>
+                </footer>
+            </article>
+            
+            <!-- Template de card - Exemple 1 -->
+            <article class="tool-card">
+                <div class="card-header">
+                    <h3 class="tool-title">Network-scanner</h3>
+                </div>
+                <p class="tool-description">
+                    Outil permettant de scanner une plage d'ip.
+                </p>
+                <footer>
+                    <a href="https://github.com/Abhay2342/Network-Scanner.git" target="_blank" class="tool-link" style="color: black;">
+                        📂 Voir le repository
+                    </a>
+                </footer>
+            </article>
+
+             <!-- Template de card - Exemple 1 -->
+            <article class="tool-card">
+                <div class="card-header">
+                    <h3 class="tool-title">Detection Lab (Suricata, wazuh et Kali)</h3>
+                </div>
+                <p class="tool-description">
+                    Permet de rapidement et efficacement installer des outils de surveillance réseau.
+                </p>
+                <footer>
+                    <a href="https://github.com/jduru213-1/suricata-wazuh-c2-detection-lab.git" target="_blank" class="tool-link" style="color: black;">
+                        📂 Voir le repository
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        // Script optionnel pour ajouter des fonctionnalités interactives
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tool-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
